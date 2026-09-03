@@ -10,37 +10,19 @@ const NAV_ITEMS = [
   { to: "/kontakt", label: "Kontakt", icon: Mail },
 ];
 
-function BrushBackdrop() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="pointer-events-none fixed inset-0 w-full h-full"
-      style={{ zIndex: 0 }}
-      viewBox="0 0 1000 1000"
-      preserveAspectRatio="none"
-    >
-      <defs>
-        <filter id="brushEdge" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.014 0.05" numOctaves="3" seed="7" result="noise" />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </defs>
-      <g filter="url(#brushEdge)" fill="none" stroke={COLORS.navy} strokeLinecap="round">
-        <path d="M-60 170 C 260 100, 640 250, 1080 140" strokeWidth="11" opacity="0.10" />
-        <path d="M-60 500 C 300 440, 720 610, 1080 470" strokeWidth="7" opacity="0.07" />
-        <path d="M-60 830 C 220 800, 660 900, 1080 800" strokeWidth="13" opacity="0.09" />
-      </g>
-    </svg>
-  );
-}
-
 export default function Layout({ session, onLogout, addBooking, isSlotUnavailable }) {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen relative" style={{ background: COLORS.bg, color: COLORS.ink, fontFamily: "'Work Sans', sans-serif" }}>
+    <div
+      className="min-h-screen relative"
+      style={{
+        background: `linear-gradient(122deg, #FAFAF7 0 43%, ${COLORS.navyDeep} 43% 100%)`,
+        color: COLORS.ink,
+        fontFamily: "'Work Sans', sans-serif",
+      }}
+    >
       <style>{GLOBAL_CSS}</style>
-      <BrushBackdrop />
 
       {/* ---------- DESKTOP TOP NAV ---------- */}
       <header className="hidden md:flex sticky top-0 z-40 items-center justify-between h-20 px-10" style={{ background: "rgba(230,240,236,0.92)", backdropFilter: "blur(6px)", borderBottom: `1px solid ${COLORS.line}` }}>
@@ -108,16 +90,19 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
       </header>
 
       {/* ---------- PAGE CONTENT ---------- */}
-      <main className="relative z-[1] px-5 md:px-10 py-10 pb-28 md:pb-10 max-w-3xl mx-auto">
+      <main
+        className="relative z-[1] px-5 md:px-10 py-10 pb-28 md:pb-10 md:my-10 max-w-3xl mx-auto md:rounded-[1.75rem]"
+        style={{ background: "rgba(255,255,255,0.9)", boxShadow: "0 24px 60px -24px rgba(27,39,64,0.45)" }}
+      >
         <Outlet context={{ session, onLogout, addBooking, isSlotUnavailable }} />
       </main>
 
       {/* ---------- FOOTER ---------- */}
-      <footer className="relative z-[1] px-5 md:px-10 pb-28 md:pb-10 pt-8 max-w-3xl mx-auto" style={{ borderTop: `1px solid ${COLORS.line}`, color: COLORS.textMuted }}>
-        <p className="text-sm mb-1" style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, color: COLORS.ink }}>Harmonia — Gabinet Bioenergoterapii</p>
+      <footer className="relative z-[1] px-5 md:px-10 pb-28 md:pb-10 pt-8 max-w-3xl mx-auto" style={{ borderTop: "1px solid rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.72)" }}>
+        <p className="text-sm mb-1" style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, color: "#fff" }}>Harmonia — Gabinet Bioenergoterapii</p>
         <p className="text-xs mb-1">Anna Pietrzak Gryc — założycielka i organizatorka</p>
         <p className="text-xs">Sobolewo k. Białegostoku · 519 129 909 · apietrzakgryc@gmail.com</p>
-        <p className="text-xs mt-3" style={{ opacity: 0.7 }}>© {new Date().getFullYear()} Harmonia. Zdjęcia poglądowe.</p>
+        <p className="text-xs mt-3" style={{ opacity: 0.6 }}>© {new Date().getFullYear()} Harmonia. Zdjęcia poglądowe.</p>
       </footer>
 
       {/* ---------- MOBILE BOTTOM NAV ---------- */}
