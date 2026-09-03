@@ -38,7 +38,7 @@ function RequireAdmin({ session, sessionLoading, children }) {
   if (!session) return <Navigate to="/login" replace />;
   if (session.role !== "admin") {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "#F3F1E9" }}>
+      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "#E6F0EC" }}>
         <div className="text-center max-w-sm">
           <p style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 22, color: "#26312F" }} className="mb-2">Brak dostępu</p>
           <p className="text-sm mb-5" style={{ color: "#788782" }}>To konto ({session.name}) nie ma uprawnień terapeuty.</p>

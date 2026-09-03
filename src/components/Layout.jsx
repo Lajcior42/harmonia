@@ -18,7 +18,7 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
       <style>{GLOBAL_CSS}</style>
 
       {/* ---------- DESKTOP TOP NAV ---------- */}
-      <header className="hidden md:flex sticky top-0 z-40 items-center justify-between h-20 px-10" style={{ background: "rgba(243,241,233,0.92)", backdropFilter: "blur(6px)", borderBottom: `1px solid ${COLORS.line}` }}>
+      <header className="hidden md:flex sticky top-0 z-40 items-center justify-between h-20 px-10" style={{ background: "rgba(230,240,236,0.92)", backdropFilter: "blur(6px)", borderBottom: `1px solid ${COLORS.line}` }}>
         <div className="flex items-center gap-12">
           <div className="flex flex-col leading-tight">
             <span className="shimmer-text" style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 24 }}>Harmonia</span>
@@ -64,7 +64,7 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
       </header>
 
       {/* ---------- MOBILE TOP BAR ---------- */}
-      <header className="flex md:hidden items-center justify-between h-16 px-5 sticky top-0 z-40" style={{ background: "rgba(243,241,233,0.92)", backdropFilter: "blur(6px)", borderBottom: `1px solid ${COLORS.line}` }}>
+      <header className="flex md:hidden items-center justify-between h-16 px-5 sticky top-0 z-40" style={{ background: "rgba(230,240,236,0.92)", backdropFilter: "blur(6px)", borderBottom: `1px solid ${COLORS.line}` }}>
         <span className="shimmer-text" style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 20 }}>Harmonia</span>
         <div className="flex items-center gap-2">
           <a href="tel:+48519129909" className="w-9 h-9 flex items-center justify-center rounded-full" style={{ color: COLORS.ink, background: COLORS.surface }}>
