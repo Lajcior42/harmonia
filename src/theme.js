@@ -8,6 +8,8 @@ export const COLORS = {
   amber: "#D9B36C",
   blue: "#3E8FB0",
   blueDark: "#2E7089",
+  navy: "#24324D",
+  navyDeep: "#1B2740",
   danger: "#B8604A",
   ink: "#26312F",
   textMuted: "#788782",
