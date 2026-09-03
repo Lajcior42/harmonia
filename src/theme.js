@@ -10,6 +10,8 @@ export const COLORS = {
   blueDark: "#2E7089",
   navy: "#24324D",
   navyDeep: "#1B2740",
+  navySoft: "#2C3E5E",
+  mintBg: "#CFE8DE",
   danger: "#B8604A",
   ink: "#26312F",
   textMuted: "#788782",

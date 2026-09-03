@@ -10,19 +10,40 @@ const NAV_ITEMS = [
   { to: "/kontakt", label: "Kontakt", icon: Mail },
 ];
 
+function WaveSplit() {
+  // Falowana linia dzieląca tło: lewa strona miętowa, prawa jaśniejszy granat.
+  return (
+    <svg
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 w-full h-full"
+      style={{ zIndex: 0 }}
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+    >
+      <rect width="100" height="100" fill={COLORS.mintBg} />
+      <path
+        d="M58 -2
+           C 50 10, 66 18, 58 30
+           C 50 42, 66 50, 58 62
+           C 50 74, 66 82, 58 94
+           C 54 100, 56 100, 58 102
+           L 102 102 L 102 -2 Z"
+        fill={COLORS.navySoft}
+      />
+    </svg>
+  );
+}
+
 export default function Layout({ session, onLogout, addBooking, isSlotUnavailable }) {
   const navigate = useNavigate();
 
   return (
     <div
       className="min-h-screen relative"
-      style={{
-        background: `linear-gradient(122deg, #FAFAF7 0 43%, ${COLORS.navyDeep} 43% 100%)`,
-        color: COLORS.ink,
-        fontFamily: "'Work Sans', sans-serif",
-      }}
+      style={{ background: COLORS.mintBg, color: COLORS.ink, fontFamily: "'Work Sans', sans-serif" }}
     >
       <style>{GLOBAL_CSS}</style>
+      <WaveSplit />
 
       {/* ---------- DESKTOP TOP NAV ---------- */}
       <header className="hidden md:flex sticky top-0 z-40 items-center justify-between h-20 px-10" style={{ background: "rgba(230,240,236,0.92)", backdropFilter: "blur(6px)", borderBottom: `1px solid ${COLORS.line}` }}>
@@ -98,11 +119,13 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
       </main>
 
       {/* ---------- FOOTER ---------- */}
-      <footer className="relative z-[1] px-5 md:px-10 pb-28 md:pb-10 pt-8 max-w-3xl mx-auto" style={{ borderTop: "1px solid rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.72)" }}>
-        <p className="text-sm mb-1" style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, color: "#fff" }}>Harmonia — Gabinet Bioenergoterapii</p>
-        <p className="text-xs mb-1">Anna Pietrzak Gryc — założycielka i organizatorka</p>
-        <p className="text-xs">Sobolewo k. Białegostoku · 519 129 909 · apietrzakgryc@gmail.com</p>
-        <p className="text-xs mt-3" style={{ opacity: 0.6 }}>© {new Date().getFullYear()} Harmonia. Zdjęcia poglądowe.</p>
+      <footer className="relative z-[1]" style={{ background: COLORS.navyDeep, color: "rgba(255,255,255,0.72)" }}>
+        <div className="px-5 md:px-10 pb-28 md:pb-10 pt-8 max-w-3xl mx-auto">
+          <p className="text-sm mb-1" style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, color: "#fff" }}>Harmonia — Gabinet Bioenergoterapii</p>
+          <p className="text-xs mb-1">Anna Pietrzak Gryc — założycielka i organizatorka</p>
+          <p className="text-xs">Sobolewo k. Białegostoku · 519 129 909 · apietrzakgryc@gmail.com</p>
+          <p className="text-xs mt-3" style={{ opacity: 0.6 }}>© {new Date().getFullYear()} Harmonia. Zdjęcia poglądowe.</p>
+        </div>
       </footer>
 
       {/* ---------- MOBILE BOTTOM NAV ---------- */}
