@@ -71,9 +71,9 @@ export default function Contact() {
         <div>
           <div className="rounded-2xl p-6 mb-4" style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}` }}>
             <p className="text-sm mb-3" style={{ fontWeight: 700, color: COLORS.ink }}>Anna Pietrzak Gryc<span className="block text-xs" style={{ fontWeight: 400, color: COLORS.textMuted }}>Gabinet bioenergoterapii Harmonia</span></p>
-            <div className="flex items-center gap-3 mb-3"><Phone size={16} style={{ color: COLORS.blue }} /><span className="text-sm">500 100 200</span></div>
-            <div className="flex items-center gap-3 mb-3"><Mail size={16} style={{ color: COLORS.blue }} /><span className="text-sm">kontakt@harmonia-gabinet.pl</span></div>
-            <div className="flex items-center gap-3 mb-4"><MapPin size={16} style={{ color: COLORS.blue }} /><span className="text-sm">ul. Spokojna 12, 15-001 Białystok</span></div>
+            <a href="tel:+48519129909" className="flex items-center gap-3 mb-3"><Phone size={16} style={{ color: COLORS.blue }} /><span className="text-sm" style={{ color: COLORS.ink }}>519 129 909</span></a>
+            <a href="mailto:apietrzakgryc@gmail.com" className="flex items-center gap-3 mb-3"><Mail size={16} style={{ color: COLORS.blue }} /><span className="text-sm" style={{ color: COLORS.ink }}>apietrzakgryc@gmail.com</span></a>
+            <div className="flex items-center gap-3 mb-4"><MapPin size={16} style={{ color: COLORS.blue }} /><span className="text-sm">Sobolewo k. Białegostoku</span></div>
             <div className="flex gap-2">
               <a href="#" className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: `${COLORS.blue}15`, color: COLORS.blue }}><Instagram size={16} /></a>
               <a href="#" className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: `${COLORS.blue}15`, color: COLORS.blue }}><Facebook size={16} /></a>

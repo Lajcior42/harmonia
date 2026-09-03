@@ -1,18 +1,21 @@
+// Paleta miętowo-błękitna. Uwaga: klucze `gold` / `goldDark` / `amber` zostały
+// przemapowane na odcienie turkusu/mięty — nazwy zachowano, żeby nie zmieniać
+// kilkudziesięciu miejsc użycia. To główny kolor akcentu na całej stronie.
 export const COLORS = {
-  bg: "#F3F1E9",
-  surface: "#FFFDF9",
+  bg: "#E8F1EF",
+  surface: "#FBFEFD",
   mint: "#4FAF93",
   mintDark: "#3C8570",
-  gold: "#C9A44C",
-  goldDark: "#A6832E",
-  amber: "#D9B36C",
+  gold: "#2E9C8E",
+  goldDark: "#227A6F",
+  amber: "#7FC9BA",
   blue: "#3E8FB0",
   blueDark: "#2E7089",
   danger: "#B8604A",
-  ink: "#26312F",
-  textMuted: "#788782",
-  line: "rgba(38,49,47,0.12)",
-  lineStrong: "rgba(38,49,47,0.2)",
+  ink: "#213230",
+  textMuted: "#6C817C",
+  line: "rgba(33,50,48,0.12)",
+  lineStrong: "rgba(33,50,48,0.2)",
 };
 
 // Wspólne style: fonty, glow, bloby, oraz efekt "mieniącego się" gradientu (shimmer)
@@ -20,10 +23,10 @@ export const GLOBAL_CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,450;9..144,600&family=Work+Sans:wght@400;500;600&display=swap');
 
   .glow-card { transition: transform .28s ease, box-shadow .28s ease; }
-  .glow-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px -12px rgba(201,164,76,0.35), 0 0 0 1px rgba(62,143,176,0.12); }
+  .glow-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px -12px rgba(79,175,147,0.35), 0 0 0 1px rgba(62,143,176,0.18); }
 
   .glow-btn { position: relative; overflow: hidden; transition: box-shadow .25s ease, transform .2s ease; }
-  .glow-btn:hover { box-shadow: 0 0 26px rgba(201,164,76,0.45), 0 0 40px rgba(79,175,147,0.25); transform: translateY(-1px); }
+  .glow-btn:hover { box-shadow: 0 0 26px rgba(79,175,147,0.45), 0 0 40px rgba(62,143,176,0.3); transform: translateY(-1px); }
   .glow-btn::after {
     content: ""; position: absolute; top: 0; left: -75%; width: 50%; height: 100%;
     background: linear-gradient(120deg, transparent, rgba(255,255,255,0.55), transparent);

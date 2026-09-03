@@ -44,10 +44,10 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
           </nav>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-sm mr-2" style={{ color: COLORS.textMuted }}>
+          <a href="tel:+48519129909" className="flex items-center gap-2 text-sm mr-2" style={{ color: COLORS.textMuted }}>
             <Phone size={15} strokeWidth={1.6} />
-            <span>500 100 200</span>
-          </div>
+            <span>519 129 909</span>
+          </a>
           <button onClick={() => navigate("/rezerwacja")} className="glow-btn px-5 py-2.5 rounded-full text-sm" style={{ background: COLORS.gold, color: "#fff", fontWeight: 700 }}>
             Zarezerwuj sesję
           </button>
@@ -67,7 +67,7 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
       <header className="flex md:hidden items-center justify-between h-16 px-5 sticky top-0 z-40" style={{ background: "rgba(243,241,233,0.92)", backdropFilter: "blur(6px)", borderBottom: `1px solid ${COLORS.line}` }}>
         <span className="shimmer-text" style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 20 }}>Harmonia</span>
         <div className="flex items-center gap-2">
-          <a href="tel:500100200" className="w-9 h-9 flex items-center justify-center rounded-full" style={{ color: COLORS.ink, background: COLORS.surface }}>
+          <a href="tel:+48519129909" className="w-9 h-9 flex items-center justify-center rounded-full" style={{ color: COLORS.ink, background: COLORS.surface }}>
             <Phone size={16} strokeWidth={1.7} />
           </a>
           {session ? (
@@ -91,7 +91,7 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
       <footer className="px-5 md:px-10 pb-28 md:pb-10 pt-8 max-w-3xl mx-auto" style={{ borderTop: `1px solid ${COLORS.line}`, color: COLORS.textMuted }}>
         <p className="text-sm mb-1" style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, color: COLORS.ink }}>Harmonia — Gabinet Bioenergoterapii</p>
         <p className="text-xs mb-1">Anna Pietrzak Gryc — założycielka i organizatorka</p>
-        <p className="text-xs">ul. Spokojna 12, 15-001 Białystok · 500 100 200 · kontakt@harmonia-gabinet.pl</p>
+        <p className="text-xs">Sobolewo k. Białegostoku · 519 129 909 · apietrzakgryc@gmail.com</p>
         <p className="text-xs mt-3" style={{ opacity: 0.7 }}>© {new Date().getFullYear()} Harmonia. Zdjęcia poglądowe.</p>
       </footer>
 
