@@ -136,21 +136,43 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
         </div>
       </footer>
 
-      {/* ---------- MOBILE BOTTOM NAV ---------- */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50" style={{ background: COLORS.surface, borderTop: `1px solid ${COLORS.line}`, paddingBottom: "env(safe-area-inset-bottom)" }}>
-        <div className="flex items-stretch justify-between px-2">
+      {/* ---------- MOBILE FLOATING NAV ---------- */}
+      <div className="md:hidden fixed left-0 right-0 z-50 flex justify-center px-4 pointer-events-none" style={{ bottom: "calc(env(safe-area-inset-bottom) + 14px)" }}>
+        <nav
+          className="pointer-events-auto flex items-center gap-1 rounded-full px-2 py-2"
+          style={{
+            background: "rgba(255,253,249,0.82)",
+            backdropFilter: "blur(14px)",
+            WebkitBackdropFilter: "blur(14px)",
+            border: `1px solid ${COLORS.line}`,
+            boxShadow: "0 14px 40px -10px rgba(27,39,64,0.45), 0 2px 8px rgba(27,39,64,0.15)",
+          }}
+        >
           {NAV_ITEMS.map(({ to, label, icon: Icon, end }) => (
-            <NavLink key={to} to={to} end={end} className="relative flex-1 flex flex-col items-center justify-center gap-1 py-3">
+            <NavLink key={to} to={to} end={end} aria-label={label} className="relative flex items-center justify-center w-12 h-12 rounded-full transition-all duration-200">
               {({ isActive }) => (
                 <>
-                  {isActive && <span className="absolute top-1.5 w-1.5 h-1.5 rounded-full" style={{ background: COLORS.gold, boxShadow: `0 0 8px ${COLORS.gold}` }} />}
-                  <Icon size={22} strokeWidth={isActive ? 2.2 : 1.6} style={{ color: isActive ? COLORS.gold : "#BFC7BE" }} className={`transition-transform duration-150 ${isActive ? "-translate-y-0.5" : ""}`} />
+                  <span
+                    className="absolute inset-0 rounded-full transition-all duration-200"
+                    style={{
+                      background: isActive ? COLORS.gold : "transparent",
+                      transform: isActive ? "scale(1)" : "scale(0.6)",
+                      opacity: isActive ? 1 : 0,
+                      boxShadow: isActive ? `0 6px 16px -4px ${COLORS.gold}` : "none",
+                    }}
+                  />
+                  <Icon
+                    size={21}
+                    strokeWidth={isActive ? 2.2 : 1.8}
+                    className="relative transition-transform duration-200"
+                    style={{ color: isActive ? "#fff" : COLORS.textMuted, transform: isActive ? "translateY(-1px)" : "none" }}
+                  />
                 </>
               )}
             </NavLink>
           ))}
-        </div>
-      </nav>
+        </nav>
+      </div>
     </div>
   );
 }
