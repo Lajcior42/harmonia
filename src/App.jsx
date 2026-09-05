@@ -131,8 +131,8 @@ export default function App() {
       status: "oczekuje",
     });
     if (error) {
-      alert("Nie udało się zapisać rezerwacji: " + error.message);
-      return;
+      console.warn("Nie udało się zapisać rezerwacji:", error.message);
+      return { ok: false, error: error.message };
     }
     refreshAvailability();
     if (session?.role === "admin") refreshBookings();
@@ -140,6 +140,7 @@ export default function App() {
     // e-mail do klienta (i do terapeutki) o nowej rezerwacji — błąd wysyłki
     // nie blokuje rezerwacji, więc tylko logujemy go w konsoli
     supabase.functions.invoke("send-booking-email", { body: { type: "new", booking } }).catch((e) => console.warn("Nie udało się wysłać e-maila:", e));
+    return { ok: true };
   }
 
   async function updateBookingStatus(id, status) {

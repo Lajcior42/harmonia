@@ -62,11 +62,16 @@ export default function Booking() {
   const visibleDays = useMemo(() => buildDays(dayOffset, 7), [dayOffset]);
   const selectedServiceObj = SERVICES.find((s) => s.id === selectedService);
 
-  function handleFinalConfirm() {
+  const [submitError, setSubmitError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleFinalConfirm() {
     if (!selectedService || !selectedForm || !selectedDate || !selectedTime || !customer.name || !customer.email) return;
     if (selectedForm === "Na odległość" && !customer.phone) return;
-    if (!rodoOk) return;
-    addBooking({
+    if (!rodoOk || submitting) return;
+    setSubmitError("");
+    setSubmitting(true);
+    const result = await addBooking({
       clientName: customer.name,
       clientEmail: customer.email,
       clientPhone: customer.phone,
@@ -75,6 +80,11 @@ export default function Booking() {
       date: dateKey(selectedDate),
       time: selectedTime,
     });
+    setSubmitting(false);
+    if (result && result.ok === false) {
+      setSubmitError("Nie udało się zapisać rezerwacji. Spróbuj ponownie lub napisz na apietrzakgryc@gmail.com.");
+      return;
+    }
     setConfirmed(true);
   }
 
@@ -255,8 +265,12 @@ export default function Booking() {
             <span>Wyrażam zgodę na przetwarzanie moich danych w celu umówienia i realizacji sesji, zgodnie z <a href="/polityka-prywatnosci" className="underline">polityką prywatności</a>.</span>
           </label>
 
+          {submitError && (
+            <p className="text-sm mb-4 rounded-xl px-4 py-3" style={{ background: `${COLORS.danger}14`, color: COLORS.danger, border: `1px solid ${COLORS.danger}33` }}>{submitError}</p>
+          )}
+
           {(() => {
-            const ready = customer.name && customer.email && rodoOk && !(selectedForm === "Na odległość" && !customer.phone);
+            const ready = customer.name && customer.email && rodoOk && !(selectedForm === "Na odległość" && !customer.phone) && !submitting;
             return (
               <div className="flex justify-between items-center">
                 <button onClick={() => setBookingStep(3)} className="flex items-center gap-2 px-5 py-3 rounded-full text-sm" style={{ color: COLORS.ink, border: `1px solid ${COLORS.lineStrong}`, fontWeight: 700 }}><ArrowLeftIcon size={15} /> Wstecz</button>
@@ -267,7 +281,7 @@ export default function Booking() {
                     fontWeight: 700,
                     cursor: ready ? "pointer" : "not-allowed",
                   }}>
-                  Potwierdzam i rezerwuję
+                  {submitting ? "Zapisywanie…" : "Potwierdzam i rezerwuję"}
                 </button>
               </div>
             );
