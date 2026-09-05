@@ -4,6 +4,9 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Klucz publiczny Supabase (przeznaczony do przeglądarki; bezpieczny przy włączonym RLS)
+  VITE_SUPABASE_URL = "https://taweqzmepvddxdetdjbw.supabase.co"
+  VITE_SUPABASE_ANON_KEY = "sb_publishable_GArkMrgJoeJhQVOwRnNjMg_M5ouxCDP"
 
 [[redirects]]
   from = "/*"
