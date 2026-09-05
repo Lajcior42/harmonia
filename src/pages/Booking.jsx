@@ -88,6 +88,39 @@ export default function Booking() {
     setConfirmed(true);
   }
 
+  function downloadIcs() {
+    if (!selectedDate || !selectedTime) return;
+    const [hh, mm] = selectedTime.split(":").map(Number);
+    const start = new Date(selectedDate);
+    start.setHours(hh, mm, 0, 0);
+    const durMin = parseInt(selectedServiceObj?.duration, 10) || 60;
+    const end = new Date(start.getTime() + durMin * 60000);
+    const pad = (n) => String(n).padStart(2, "0");
+    const fmt = (d) => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+    const loc = selectedForm === "Na odległość" ? "Sesja online (WhatsApp)" : "Sobolewo k. Białegostoku";
+    const ics = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Harmonia//Rezerwacja//PL",
+      "BEGIN:VEVENT",
+      `UID:${Date.now()}-${Math.random().toString(36).slice(2)}@harmonia`,
+      `DTSTAMP:${fmt(new Date())}`,
+      `DTSTART:${fmt(start)}`,
+      `DTEND:${fmt(end)}`,
+      `SUMMARY:Harmonia — ${selectedServiceObj?.title || "sesja"} (${selectedForm})`,
+      "DESCRIPTION:Gabinet bioenergoterapii Harmonia. Status: oczekuje na potwierdzenie przez terapeutkę.",
+      `LOCATION:${loc}`,
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ].join("\r\n");
+    const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "harmonia-wizyta.ics";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   if (confirmed && selectedDate) {
     return (
       <div className="fade-in flex flex-col items-center text-center pt-6">
@@ -106,7 +139,7 @@ export default function Booking() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
-          <button className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm" style={{ background: COLORS.surface, border: `1px solid ${COLORS.lineStrong}`, color: COLORS.ink, fontWeight: 700 }}>
+          <button onClick={downloadIcs} className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm" style={{ background: COLORS.surface, border: `1px solid ${COLORS.lineStrong}`, color: COLORS.ink, fontWeight: 700 }}>
             <CalendarPlus size={15} /> Dodaj do kalendarza
           </button>
           <button onClick={() => navigate("/")} className="glow-btn flex-1 py-3 rounded-full text-sm" style={{ background: COLORS.ink, color: "#fff", fontWeight: 700 }}>Wróć do strony głównej</button>

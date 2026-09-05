@@ -1,5 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+
+// Po zmianie podstrony przewiń na górę (SPA domyślnie tego nie robi).
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 import Layout from "./components/Layout.jsx";
 import AdminLayout from "./components/AdminLayout.jsx";
@@ -178,6 +187,8 @@ export default function App() {
   }
 
   return (
+    <>
+    <ScrollToTop />
     <Routes>
       <Route element={<Layout session={session} onLogout={handleLogout} addBooking={addBooking} isSlotUnavailable={isSlotUnavailable} />}>
         <Route index element={<Home />} />
@@ -208,5 +219,6 @@ export default function App() {
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </>
   );
 }
