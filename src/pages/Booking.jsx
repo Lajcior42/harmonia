@@ -56,6 +56,7 @@ export default function Booking() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [confirmed, setConfirmed] = useState(false);
+  const [rodoOk, setRodoOk] = useState(false);
   const [customer, setCustomer] = useState({ name: session?.name || "", email: session?.email || "", phone: "" });
 
   const visibleDays = useMemo(() => buildDays(dayOffset, 7), [dayOffset]);
@@ -64,6 +65,7 @@ export default function Booking() {
   function handleFinalConfirm() {
     if (!selectedService || !selectedForm || !selectedDate || !selectedTime || !customer.name || !customer.email) return;
     if (selectedForm === "Na odległość" && !customer.phone) return;
+    if (!rodoOk) return;
     addBooking({
       clientName: customer.name,
       clientEmail: customer.email,
@@ -246,20 +248,30 @@ export default function Booking() {
           {selectedForm === "Na odległość" && (
             <p className="text-xs mb-6" style={{ color: COLORS.goldDark }}>Sesja na odległość odbywa się przez WhatsApp — potrzebuję Twojego numeru telefonu, żeby się z Tobą połączyć.</p>
           )}
-          {selectedForm !== "Na odległość" && <div className="mb-8" />}
+          {selectedForm !== "Na odległość" && <div className="mb-4" />}
 
-          <div className="flex justify-between items-center">
-            <button onClick={() => setBookingStep(3)} className="flex items-center gap-2 px-5 py-3 rounded-full text-sm" style={{ color: COLORS.ink, border: `1px solid ${COLORS.lineStrong}`, fontWeight: 700 }}><ArrowLeftIcon size={15} /> Wstecz</button>
-            <button onClick={handleFinalConfirm} disabled={!customer.name || !customer.email || (selectedForm === "Na odległość" && !customer.phone)} className="glow-btn px-7 py-3 rounded-full text-sm"
-              style={{
-                background: customer.name && customer.email && !(selectedForm === "Na odległość" && !customer.phone) ? COLORS.gold : COLORS.lineStrong,
-                color: customer.name && customer.email && !(selectedForm === "Na odległość" && !customer.phone) ? "#fff" : COLORS.textMuted,
-                fontWeight: 700,
-                cursor: customer.name && customer.email && !(selectedForm === "Na odległość" && !customer.phone) ? "pointer" : "not-allowed",
-              }}>
-              Potwierdzam i rezerwuję
-            </button>
-          </div>
+          <label className="flex items-start gap-2 text-xs mb-6" style={{ color: COLORS.textMuted, lineHeight: 1.5 }}>
+            <input type="checkbox" checked={rodoOk} onChange={(e) => setRodoOk(e.target.checked)} className="mt-0.5" />
+            <span>Wyrażam zgodę na przetwarzanie moich danych w celu umówienia i realizacji sesji, zgodnie z <a href="/polityka-prywatnosci" className="underline">polityką prywatności</a>.</span>
+          </label>
+
+          {(() => {
+            const ready = customer.name && customer.email && rodoOk && !(selectedForm === "Na odległość" && !customer.phone);
+            return (
+              <div className="flex justify-between items-center">
+                <button onClick={() => setBookingStep(3)} className="flex items-center gap-2 px-5 py-3 rounded-full text-sm" style={{ color: COLORS.ink, border: `1px solid ${COLORS.lineStrong}`, fontWeight: 700 }}><ArrowLeftIcon size={15} /> Wstecz</button>
+                <button onClick={handleFinalConfirm} disabled={!ready} className="glow-btn px-7 py-3 rounded-full text-sm"
+                  style={{
+                    background: ready ? COLORS.gold : COLORS.lineStrong,
+                    color: ready ? "#fff" : COLORS.textMuted,
+                    fontWeight: 700,
+                    cursor: ready ? "pointer" : "not-allowed",
+                  }}>
+                  Potwierdzam i rezerwuję
+                </button>
+              </div>
+            );
+          })()}
         </div>
       )}
     </div>

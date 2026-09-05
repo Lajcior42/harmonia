@@ -11,6 +11,7 @@ import Offer from "./pages/Offer.jsx";
 import Booking from "./pages/Booking.jsx";
 import Contact from "./pages/Contact.jsx";
 import Profile from "./pages/Profile.jsx";
+import Privacy from "./pages/Privacy.jsx";
 
 import AdminOverview from "./pages/admin/Overview.jsx";
 import AdminSchedule from "./pages/admin/Schedule.jsx";
@@ -183,6 +184,7 @@ export default function App() {
         <Route path="rezerwacja" element={<Booking />} />
         <Route path="kontakt" element={<Contact />} />
         <Route path="profil" element={<Profile />} />
+        <Route path="polityka-prywatnosci" element={<Privacy />} />
       </Route>
 
       <Route path="login" element={<LoginPage onLogin={handleLogin} />} />

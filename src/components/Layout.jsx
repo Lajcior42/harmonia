@@ -1,4 +1,4 @@
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
 import { Home, User, Sparkles, CalendarCheck, Mail, Phone } from "lucide-react";
 import { COLORS, GLOBAL_CSS } from "../theme.js";
 
@@ -129,7 +129,10 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
           <p className="text-sm mb-1" style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, color: "#fff" }}>Harmonia — Gabinet Bioenergoterapii</p>
           <p className="text-xs mb-1">Anna Pietrzak Gryc — założycielka i organizatorka</p>
           <p className="text-xs">Sobolewo k. Białegostoku · 519 129 909 · apietrzakgryc@gmail.com</p>
-          <p className="text-xs mt-3" style={{ opacity: 0.6 }}>© {new Date().getFullYear()} Harmonia. Zdjęcia poglądowe.</p>
+          <p className="text-xs mt-3">
+            <Link to="/polityka-prywatnosci" className="underline" style={{ color: "rgba(255,255,255,0.85)" }}>Polityka prywatności</Link>
+          </p>
+          <p className="text-xs mt-2" style={{ opacity: 0.6 }}>Bioenergoterapia nie zastępuje leczenia medycznego. © {new Date().getFullYear()} Harmonia. Zdjęcia poglądowe.</p>
         </div>
       </footer>
 

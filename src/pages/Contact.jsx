@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { Check, Mail, Phone, MapPin, Instagram, Facebook, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Check, Mail, Phone, MapPin, ChevronDown } from "lucide-react";
 import { COLORS } from "../theme.js";
+
+const CONTACT_EMAIL = "apietrzakgryc@gmail.com";
 
 const FAQ_ITEMS = [
   { q: "Jak wygląda pierwsza sesja?", a: "Zaczynamy od krótkiej rozmowy o tym, co Cię do mnie sprowadza i jak się obecnie czujesz. Sama sesja trwa 45–60 minut i odbywa się w spokojnej, przyciemnionej przestrzeni — leżysz lub siedzisz w wygodnej pozycji." },
@@ -34,12 +37,31 @@ function FaqItem({ q, a }) {
 }
 
 export default function Contact() {
-  const [contactSent, setContactSent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | error
   const [topic, setTopic] = useState(TOPICS[0]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setContactSent(true);
+    const form = e.currentTarget;
+    const data = {
+      Temat: topic,
+      "Imię i nazwisko": form.name.value,
+      "E-mail": form.email.value,
+      Wiadomość: form.message.value,
+      _subject: `Harmonia — kontakt: ${topic}`,
+    };
+    setStatus("sending");
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("send failed");
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -49,7 +71,7 @@ export default function Contact() {
 
       <div className="grid md:grid-cols-2 gap-8 mb-12">
         <div>
-          {contactSent ? (
+          {status === "sent" ? (
             <div className="rounded-2xl p-6 text-center" style={{ background: `${COLORS.mint}1A`, border: `1px solid ${COLORS.mint}44` }}>
               <Check size={22} style={{ color: COLORS.mintDark }} className="mx-auto mb-2" />
               <p style={{ fontWeight: 700 }} className="mb-1">Wiadomość wysłana</p>
@@ -60,10 +82,21 @@ export default function Contact() {
               <select value={topic} onChange={(e) => setTopic(e.target.value)} className="text-sm px-4 py-3 rounded-xl outline-none" style={{ border: `1px solid ${COLORS.line}`, background: COLORS.surface, color: COLORS.ink }}>
                 {TOPICS.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
-              <input placeholder="Imię i nazwisko" required className="text-sm px-4 py-3 rounded-xl outline-none" style={{ border: `1px solid ${COLORS.line}`, background: COLORS.surface }} />
-              <input placeholder="E-mail" type="email" required className="text-sm px-4 py-3 rounded-xl outline-none" style={{ border: `1px solid ${COLORS.line}`, background: COLORS.surface }} />
-              <textarea placeholder="Wiadomość" required rows={4} className="text-sm px-4 py-3 rounded-xl outline-none resize-none" style={{ border: `1px solid ${COLORS.line}`, background: COLORS.surface }} />
-              <button type="submit" className="glow-btn py-3 rounded-full text-sm" style={{ background: COLORS.gold, color: "#fff", fontWeight: 700 }}>Wyślij wiadomość</button>
+              <input name="name" placeholder="Imię i nazwisko" required className="text-sm px-4 py-3 rounded-xl outline-none" style={{ border: `1px solid ${COLORS.line}`, background: COLORS.surface }} />
+              <input name="email" placeholder="E-mail" type="email" required className="text-sm px-4 py-3 rounded-xl outline-none" style={{ border: `1px solid ${COLORS.line}`, background: COLORS.surface }} />
+              <textarea name="message" placeholder="Wiadomość" required rows={4} className="text-sm px-4 py-3 rounded-xl outline-none resize-none" style={{ border: `1px solid ${COLORS.line}`, background: COLORS.surface }} />
+              <label className="flex items-start gap-2 text-xs" style={{ color: COLORS.textMuted, lineHeight: 1.5 }}>
+                <input type="checkbox" required className="mt-0.5" />
+                <span>Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na wiadomość, zgodnie z <Link to="/polityka-prywatnosci" className="underline">polityką prywatności</Link>.</span>
+              </label>
+              <button type="submit" disabled={status === "sending"} className="glow-btn py-3 rounded-full text-sm" style={{ background: COLORS.gold, color: "#fff", fontWeight: 700, opacity: status === "sending" ? 0.6 : 1 }}>
+                {status === "sending" ? "Wysyłanie…" : "Wyślij wiadomość"}
+              </button>
+              {status === "error" && (
+                <p className="text-xs" style={{ color: COLORS.danger }}>
+                  Nie udało się wysłać. Napisz bezpośrednio na <a href={`mailto:${CONTACT_EMAIL}`} className="underline">{CONTACT_EMAIL}</a>.
+                </p>
+              )}
             </form>
           )}
         </div>
@@ -72,18 +105,19 @@ export default function Contact() {
           <div className="rounded-2xl p-6 mb-4" style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}` }}>
             <p className="text-sm mb-3" style={{ fontWeight: 700, color: COLORS.ink }}>Anna Pietrzak Gryc<span className="block text-xs" style={{ fontWeight: 400, color: COLORS.textMuted }}>Gabinet bioenergoterapii Harmonia</span></p>
             <a href="tel:+48519129909" className="flex items-center gap-3 mb-3"><Phone size={16} style={{ color: COLORS.blue }} /><span className="text-sm" style={{ color: COLORS.ink }}>519 129 909</span></a>
-            <a href="mailto:apietrzakgryc@gmail.com" className="flex items-center gap-3 mb-3"><Mail size={16} style={{ color: COLORS.blue }} /><span className="text-sm" style={{ color: COLORS.ink }}>apietrzakgryc@gmail.com</span></a>
-            <div className="flex items-center gap-3 mb-4"><MapPin size={16} style={{ color: COLORS.blue }} /><span className="text-sm">Sobolewo k. Białegostoku</span></div>
-            <div className="flex gap-2">
-              <a href="#" className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: `${COLORS.blue}15`, color: COLORS.blue }}><Instagram size={16} /></a>
-              <a href="#" className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: `${COLORS.blue}15`, color: COLORS.blue }}><Facebook size={16} /></a>
-            </div>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-3 mb-3"><Mail size={16} style={{ color: COLORS.blue }} /><span className="text-sm" style={{ color: COLORS.ink }}>{CONTACT_EMAIL}</span></a>
+            <div className="flex items-center gap-3"><MapPin size={16} style={{ color: COLORS.blue }} /><span className="text-sm">Sobolewo k. Białegostoku</span></div>
           </div>
-          <div className="rounded-2xl overflow-hidden h-40 flex items-center justify-center" style={{ background: `${COLORS.blue}15`, border: `1px solid ${COLORS.blue}33` }}>
-            <div className="text-center">
-              <MapPin size={22} style={{ color: COLORS.blueDark }} className="mx-auto mb-1" />
-              <p className="text-xs" style={{ color: COLORS.blueDark, fontWeight: 600 }}>Podgląd mapy — podłączymy Google Maps po wdrożeniu</p>
-            </div>
+          <div className="rounded-2xl overflow-hidden h-48" style={{ border: `1px solid ${COLORS.line}` }}>
+            <iframe
+              title="Mapa — Sobolewo k. Białegostoku"
+              src="https://www.google.com/maps?q=Sobolewo%20k.%20Bia%C5%82egostoku&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </div>

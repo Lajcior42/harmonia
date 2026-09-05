@@ -42,11 +42,32 @@ export default function Home() {
         </div>
       </div>
 
+      <div className="mb-8">
+        <h2 style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 22 }} className="mb-4">Jak wygląda sesja</h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {[
+            { n: "1", t: "Rozmowa", d: "Krótko o tym, co Cię sprowadza i jak się teraz czujesz. Bez pośpiechu, bez oceniania." },
+            { n: "2", t: "Praca z energią", d: "45–60 minut w spokojnej, przyciemnionej przestrzeni — leżysz lub siedzisz wygodnie." },
+            { n: "3", t: "Domknięcie", d: "Chwila na powrót do siebie i wskazówki, czy i kiedy warto wrócić na kolejną sesję." },
+          ].map((s) => (
+            <div key={s.n} className="rounded-2xl p-5" style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}` }}>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm mb-3" style={{ background: COLORS.gold, color: "#fff", fontWeight: 700 }}>{s.n}</div>
+              <p className="text-sm mb-1" style={{ fontWeight: 700, color: COLORS.ink }}>{s.t}</p>
+              <p className="text-sm" style={{ color: COLORS.textMuted, lineHeight: 1.6 }}>{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="rounded-[1.75rem] p-8 text-center" style={{ background: `linear-gradient(135deg, ${COLORS.mint}, ${COLORS.blue})` }}>
         <p style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 22, color: "#fff" }} className="mb-2">Pierwszy krok bywa najtrudniejszy</p>
         <p className="text-sm mb-5" style={{ color: "rgba(255,255,255,0.9)" }}>Umów pierwszą sesję i zobacz, jak się poczujesz.</p>
         <button onClick={() => navigate("/rezerwacja")} className="glow-btn px-6 py-2.5 rounded-full text-sm" style={{ background: "#fff", color: COLORS.mintDark, fontWeight: 700 }}>Zarezerwuj termin</button>
       </div>
+
+      <p className="text-xs text-center mt-6" style={{ color: COLORS.textMuted }}>
+        Bioenergoterapia jest formą wsparcia uzupełniającego i nie zastępuje konsultacji lekarskiej ani leczenia.
+      </p>
     </div>
   );
 }
