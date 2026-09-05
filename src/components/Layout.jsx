@@ -112,15 +112,20 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
 
       {/* ---------- PAGE CONTENT ---------- */}
       <main
-        className="relative z-[1] px-5 md:px-10 py-10 pb-28 md:pb-10 md:my-10 max-w-3xl mx-auto md:rounded-[1.75rem]"
-        style={{ background: "rgba(255,255,255,0.9)", boxShadow: "0 24px 60px -24px rgba(27,39,64,0.45)" }}
+        className="relative z-[1] px-6 md:px-14 py-10 pb-28 md:py-14 md:pb-14 md:my-10 max-w-5xl mx-auto md:rounded-[2rem]"
+        style={{
+          background: "rgba(255,255,255,0.9)",
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
+          boxShadow: "0 24px 60px -24px rgba(27,39,64,0.4)",
+        }}
       >
         <Outlet context={{ session, onLogout, addBooking, isSlotUnavailable }} />
       </main>
 
       {/* ---------- FOOTER ---------- */}
       <footer className="relative z-[1]" style={{ background: COLORS.navyDeep, color: "rgba(255,255,255,0.72)" }}>
-        <div className="px-5 md:px-10 pb-28 md:pb-10 pt-8 max-w-3xl mx-auto">
+        <div className="px-6 md:px-14 pb-28 md:pb-10 pt-8 max-w-5xl mx-auto">
           <p className="text-sm mb-1" style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, color: "#fff" }}>Harmonia — Gabinet Bioenergoterapii</p>
           <p className="text-xs mb-1">Anna Pietrzak Gryc — założycielka i organizatorka</p>
           <p className="text-xs">Sobolewo k. Białegostoku · 519 129 909 · apietrzakgryc@gmail.com</p>
