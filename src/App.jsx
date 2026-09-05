@@ -120,15 +120,16 @@ export default function App() {
   }
 
   async function addBooking(booking) {
-    const { error } = await supabase.from("bookings").insert({
-      client_name: booking.clientName,
-      client_email: booking.clientEmail,
-      client_phone: booking.clientPhone || null,
-      service: booking.service,
-      form: booking.form,
-      date: booking.date,
-      time: booking.time,
-      status: "oczekuje",
+    // Rezerwacja przez funkcję SECURITY DEFINER (create_booking) — omija RLS,
+    // dzięki czemu niezalogowany klient może dodać wizytę bez dostępu do tabeli.
+    const { error } = await supabase.rpc("create_booking", {
+      p_name: booking.clientName,
+      p_email: booking.clientEmail,
+      p_phone: booking.clientPhone || "",
+      p_service: booking.service,
+      p_form: booking.form,
+      p_date: booking.date,
+      p_time: booking.time,
     });
     if (error) {
       console.warn("Nie udało się zapisać rezerwacji:", error.message);
