@@ -1,4 +1,4 @@
-import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { Home, User, Sparkles, CalendarCheck, Mail, Phone } from "lucide-react";
 import { COLORS, GLOBAL_CSS } from "../theme.js";
 
@@ -36,6 +36,7 @@ function WaveSplit() {
 
 export default function Layout({ session, onLogout, addBooking, isSlotUnavailable }) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div
@@ -120,7 +121,9 @@ export default function Layout({ session, onLogout, addBooking, isSlotUnavailabl
           boxShadow: "0 24px 60px -24px rgba(27,39,64,0.4)",
         }}
       >
-        <Outlet context={{ session, onLogout, addBooking, isSlotUnavailable }} />
+        <div key={location.pathname}>
+          <Outlet context={{ session, onLogout, addBooking, isSlotUnavailable }} />
+        </div>
       </main>
 
       {/* ---------- FOOTER ---------- */}
