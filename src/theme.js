@@ -65,22 +65,22 @@ export const GLOBAL_CSS = `
     animation: shimmerMove 7s linear infinite;
   }
 
-  .fade-in { animation: fadeIn .4s ease both; }
+  .fade-in { animation: fadeIn .5s ease both; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
   /* Wejście sekcji przy OTWARCIU podstrony — kolejno, jedna po drugiej.
      Nie zależy od przewijania: odpala się raz, przy montażu strony.
      Brak stałego opacity:0 — jeśli animacja z jakiegoś powodu nie ruszy,
      treść i tak jest widoczna (fill-mode:both trzyma stan początkowy tylko w trakcie). */
-  .fade-in > * { animation: sectionIn .55s cubic-bezier(.22, 1, .36, 1) both; }
-  .fade-in > *:nth-child(1) { animation-delay: .04s; }
-  .fade-in > *:nth-child(2) { animation-delay: .11s; }
-  .fade-in > *:nth-child(3) { animation-delay: .18s; }
-  .fade-in > *:nth-child(4) { animation-delay: .25s; }
-  .fade-in > *:nth-child(5) { animation-delay: .32s; }
-  .fade-in > *:nth-child(6) { animation-delay: .39s; }
-  .fade-in > *:nth-child(n+7) { animation-delay: .46s; }
-  @keyframes sectionIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in > * { animation: sectionIn .8s cubic-bezier(.22, 1, .36, 1) both; }
+  .fade-in > *:nth-child(1) { animation-delay: .06s; }
+  .fade-in > *:nth-child(2) { animation-delay: .18s; }
+  .fade-in > *:nth-child(3) { animation-delay: .3s; }
+  .fade-in > *:nth-child(4) { animation-delay: .42s; }
+  .fade-in > *:nth-child(5) { animation-delay: .54s; }
+  .fade-in > *:nth-child(6) { animation-delay: .66s; }
+  .fade-in > *:nth-child(n+7) { animation-delay: .78s; }
+  @keyframes sectionIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
   @media (prefers-reduced-motion: reduce) {
     .fade-in, .fade-in > * { animation: none !important; opacity: 1 !important; transform: none !important; }
